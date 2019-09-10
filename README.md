@@ -6,11 +6,14 @@ Ensure you have the latest LTS NodeJS and NPM versions installed. Preferred vers
 # Install dependencies
 npm install
 
-# Start mongo db
+# Install nodemon globally, if you have not already done so
+sudo npm install -g nodemon
+
+# Start mongo db in a separate terminal
 mongod
 
 # Run it
-node index.js
+nodemon index.js
 ```
 Navigate to `localhost:3000` on your machine--all API endpoints listed in `index.js` should be accessible from this URL and port.
 
