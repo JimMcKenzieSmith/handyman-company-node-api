@@ -16,6 +16,7 @@ Navigate to `localhost:3000` on your machine--all API endpoints listed in `index
 
 ## Data Schema Reference
 Here are some simple examples of the four data types used in this project. 
+
 **Customer**
 ```json5
 {
@@ -54,7 +55,7 @@ Here are some simple examples of the four data types used in this project.
   "customer":{
     "_id":"5d748578d697c5dbfecff763",
     "name":"Breanne Smith",
-    "phone":"971-404-7987"
+    "phone":"555-555-5555"
   },
   "handymanService":{
     "_id":"5d74833d718a7dda2f770318",
