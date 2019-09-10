@@ -61,9 +61,9 @@ Here are some simple examples of the four data types used in this project.
     "phone":"555-555-5555"
   },
   "handymanService":{
-    "_id":"5d74833d718a7dda2f770318",
-    "title":"Treadmill Assembly",
-    "price":125
+    "_id":"5d74818bd196a8d9d8278980",
+    "title":"Garbage Disposal Replacement",
+    "price":175
   },
   "startDate":"2019-09-09T15:00:00.000Z",
   "endDate":"2019-09-09T18:00:00.000Z",
