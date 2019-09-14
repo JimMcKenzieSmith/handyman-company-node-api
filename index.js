@@ -1,3 +1,4 @@
+const error = require('./middleware/error');
 const mongoose = require('mongoose');
 const serviceCategories = require('./routes/serviceCategories');
 const customers = require('./routes/customers');
@@ -15,6 +16,7 @@ app.use('/api/categories', serviceCategories);
 app.use('/api/customers', customers);
 app.use('/api/services', handymanServices);
 app.use('/api/jobs', jobs);
+app.use(error);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));

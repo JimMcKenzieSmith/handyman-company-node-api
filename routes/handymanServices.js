@@ -4,69 +4,94 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  const handymanServices = await HandymanService.find().sort('name');
-  res.send(handymanServices);
+router.get('/', async (req, res, next) => {
+  try {
+    const handymanServices = await HandymanService.find().sort('name');
+    res.send(handymanServices);
+  }
+  catch (ex) {
+    next(ex);
+  }
 });
 
-router.post('/', async (req, res) => {
-  const { error } = validate(req.body); 
-  if (error) return res.status(400).send(error.details[0].message);
+router.post('/', async (req, res, next) => {
+  try {
+    const { error } = validate(req.body); 
+    if (error) return res.status(400).send(error.details[0].message);
 
-  console.log("id:",req.body.serviceCategoryId);
+    console.log("id:",req.body.serviceCategoryId);
 
-  const serviceCategory = await ServiceCategory.findById(req.body.serviceCategoryId);
-  if (!serviceCategory) return res.status(400).send('Invalid handyman service category.');
+    const serviceCategory = await ServiceCategory.findById(req.body.serviceCategoryId);
+    if (!serviceCategory) return res.status(400).send('Invalid handyman service category.');
 
-  let handymanService = new HandymanService({ 
-    title: req.body.title,
-    serviceCategory: {
-      _id: serviceCategory._id,
-      name: serviceCategory.name
-    },
-    price: req.body.price
-  });
-  handymanService = await handymanService.save();
-  
-  res.send(handymanService);
-});
-
-router.put('/:id', async (req, res) => {
-  const { error } = validate(req.body); 
-  if (error) return res.status(400).send(error.details[0].message);
-
-  const serviceCategory = await ServiceCategory.findById(req.body.serviceCategoryId);
-  if (!serviceCategory) return res.status(400).send('Invalid handyman service category.');
-
-  const handymanService = await HandymanService.findByIdAndUpdate(req.params.id,
-    { 
+    let handymanService = new HandymanService({ 
       title: req.body.title,
       serviceCategory: {
         _id: serviceCategory._id,
         name: serviceCategory.name
       },
       price: req.body.price
-    }, { new: true });
-
-  if (!handymanService) return res.status(404).send('The handyman service with the given ID was not found.');
-  
-  res.send(handymanService);
+    });
+    handymanService = await handymanService.save();
+    
+    res.send(handymanService);
+  }
+  catch (ex) {
+    next(ex);
+  }
 });
 
-router.delete('/:id', async (req, res) => {
-  const handymanService = await HandymanService.findByIdAndRemove(req.params.id);
+router.put('/:id', async (req, res, next) => {
+  try {
+    const { error } = validate(req.body); 
+    if (error) return res.status(400).send(error.details[0].message);
 
-  if (!handymanService) return res.status(404).send('The handyman service with the given ID was not found.');
+    const serviceCategory = await ServiceCategory.findById(req.body.serviceCategoryId);
+    if (!serviceCategory) return res.status(400).send('Invalid handyman service category.');
 
-  res.send(handymanService);
+    const handymanService = await HandymanService.findByIdAndUpdate(req.params.id,
+      { 
+        title: req.body.title,
+        serviceCategory: {
+          _id: serviceCategory._id,
+          name: serviceCategory.name
+        },
+        price: req.body.price
+      }, { new: true });
+
+    if (!handymanService) return res.status(404).send('The handyman service with the given ID was not found.');
+    
+    res.send(handymanService);
+  }
+  catch (ex) {
+    next(ex);
+  }
 });
 
-router.get('/:id', async (req, res) => {
-  const handymanService = await HandymanService.findById(req.params.id);
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const handymanService = await HandymanService.findByIdAndRemove(req.params.id);
 
-  if (!handymanService) return res.status(404).send('The handyman service with the given ID was not found.');
+    if (!handymanService) return res.status(404).send('The handyman service with the given ID was not found.');
 
-  res.send(handymanService);
+    res.send(handymanService);
+  }
+  catch (ex) {
+    next(ex);
+  }
+});
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    const handymanService = await HandymanService.findById(req.params.id);
+
+    if (!handymanService) return res.status(404).send('The handyman service with the given ID was not found.');
+
+    res.send(handymanService);
+  }
+  catch (ex) {
+    next(ex);
+  }
 });
 
 module.exports = router; 
